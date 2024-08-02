@@ -96,14 +96,15 @@ def shortest_path(source, target):
     # Initialize frontier to just the starting position
     neighbors = list(neighbors_for_person(source))
     frontier = QueueFrontier()
-    for i in range(0,len(neighbors)):
-        node = Node(state = neighbors[i], parent=None, action=None)
+    for i in range(0, len(neighbors)):
+        node = Node(state=neighbors[i], parent=None, action=None)
         frontier.add(node)
 
     # Initialize an empty explored set
     explored = set()
 
     # Keep looping until solution found
+    counter = 0
     while True:
         # Check if no connection
         if frontier.empty():
@@ -116,10 +117,11 @@ def shortest_path(source, target):
         if node.state[1] == target:
             result = []
             while node.parent is not None:
-                result.insert(0,node.parent)
+                result.insert(0, node.state)
                 node = node.parent
+            if source != target:
+                result.insert(0, node.state)
             return result
-            
         
         # Add to explored
         explored.add(node.state)
